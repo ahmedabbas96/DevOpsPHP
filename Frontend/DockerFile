@@ -1,0 +1,16 @@
+FROM nginx:latest
+
+# Remove the default NGINX index.html
+RUN rm /usr/share/nginx/html/index.html
+RUN rm /usr/share/nginx/html/50x.html
+
+# Clone your Git repository and copy the index.html file to NGINX default HTML directory
+RUN apt-get update && apt-get install -y git
+RUN git clone https://github.com/ahmedabbas96/DevOpsPHP.git /tmp/
+RUN cp -r /tmp/DevOpsPHP/Frontend/ui/. /usr/share/nginx/html/
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]

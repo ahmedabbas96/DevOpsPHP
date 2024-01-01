@@ -1,0 +1,8 @@
+build nginx image:
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docler login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
